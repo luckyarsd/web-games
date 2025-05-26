@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background for a gaming feel */
+            color: #e2e8f0; /* Light text color */
+        }
+        .game-card {
+            background-color: #2d3748; /* Slightly lighter gray for cards */
+            border-radius: 1.25rem; /* More rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #4a5568; /* Subtle border */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: #63b3ed; /* Highlight border on hover */
+        }
+        .game-card-title {
+            background: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.25rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+        }
+        .play-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* rounded-lg */
+            font-weight: 600; /* font-semibold */
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .play-button:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .play-button-active {
+            background-image: linear-gradient(to right, #34d399, #3b82f6); /* from-green-500 to-blue-600 */
+            color: white;
+        }
+        .play-button-disabled {
+            background-color: #4a5568; /* gray-600 */
+            color: #a0aec0; /* gray-300 */
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <header class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight">
+            Dive into Fun!
+        </h1>
+        <p class="text-xl text-gray-300 mt-3 max-w-2xl mx-auto">
+            Discover a world of engaging mini-games. Pick your favorite and start playing!
+        </p>
+    </header>
+
+    <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div class="game-card p-7">
+            <h2 class="game-card-title mb-3" style="--tw-gradient-from: #34d399; --tw-gradient-to: #6ee7b7;">Guess the Number</h2>
+            <p class="text-gray-300 text-center mb-5 flex-grow text-lg">
+                Challenge your intuition! Can you guess the secret number before your attempts run out?
+            </p>
+            <img src="https://placehold.co/300x180/3b82f6/ffffff?text=Number+Game" alt="Guess the Number Game Thumbnail" class="rounded-lg mb-5 w-full h-40 object-cover border border-blue-500">
+            <a href="guess-the-number.html" class="play-button play-button-active">
+                Play Now
+            </a>
+        </div>
+
+        <div class="game-card p-7 opacity-70 cursor-not-allowed">
+            <h2 class="game-card-title mb-3" style="--tw-gradient-from: #facc15; --tw-gradient-to: #fde047;">Memory Match</h2>
+            <p class="text-gray-300 text-center mb-5 flex-grow text-lg">
+                Test your concentration! Flip cards and find all the matching pairs.
+            </p>
+            <img src="https://placehold.co/300x180/facc15/000000?text=Memory+Game" alt="Memory Match Game Thumbnail" class="rounded-lg mb-5 w-full h-40 object-cover border border-yellow-500">
+            <span class="play-button play-button-disabled">
+                Coming Soon
+            </span>
+        </div>
+
+        <div class="game-card p-7 opacity-70 cursor-not-allowed">
+            <h2 class="game-card-title mb-3" style="--tw-gradient-from: #ef4444; --tw-gradient-to: #f87171;">Rock Paper Scissors</h2>
+            <p class="text-gray-300 text-center mb-5 flex-grow text-lg">
+                A classic showdown! Challenge the computer in this timeless hand game.
+            </p>
+            <img src="https://placehold.co/300x180/ef4444/ffffff?text=RPS+Game" alt="Rock Paper Scissors Game Thumbnail" class="rounded-lg mb-5 w-full h-40 object-cover border border-red-500">
+            <span class="play-button play-button-disabled">
+                Coming Soon
+            </span>
+        </div>
+
+        <div class="game-card p-7 opacity-70 cursor-not-allowed">
+            <h2 class="game-card-title mb-3" style="--tw-gradient-from: #60a5fa; --tw-gradient-to: #93c5fd;">Tic-Tac-Toe</h2>
+            <p class="text-gray-300 text-center mb-5 flex-grow text-lg">
+                A quick and fun strategy game. Can you get three in a row before your opponent?
+            </p>
+            <img src="https://placehold.co/300x180/60a5fa/000000?text=TicTacToe" alt="Tic-Tac-Toe Game Thumbnail" class="rounded-lg mb-5 w-full h-40 object-cover border border-blue-500">
+            <span class="play-button play-button-disabled">
+                Coming Soon
+            </span>
+        </div>
+    </main>
+</body>
+</html>
