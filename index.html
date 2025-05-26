@@ -201,12 +201,15 @@
             }
             .hamburger {
                 display: flex; /* Show hamburger */
+                order: -1; /* Move hamburger to the very beginning */
+                margin-right: 1rem; /* Add space between hamburger and logo */
             }
             .nav-container {
-                flex-wrap: wrap; /* Allow items to wrap */
+                justify-content: flex-start; /* Align items to the start */
+                flex-wrap: nowrap; /* Prevent wrapping for primary items */
             }
             .nav-logo {
-                flex-grow: 1; /* Allow logo to take available space */
+                flex-grow: 0; /* Don't let logo grow */
             }
         }
     </style>
@@ -215,17 +218,17 @@
 
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-90 backdrop-blur-sm p-4 shadow-lg">
         <div class="max-w-7xl mx-auto flex justify-between items-center nav-container">
-            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white nav-logo">
-                <span class="text-gradient">DESI</span>PLAY
-            </a>
-
             <button class="hamburger" id="hamburger-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
 
-            <div class="flex items-center space-x-3 sm:space-x-6 desktop-nav-links">
+            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white nav-logo">
+                <span class="text-gradient">DESI</span>PLAY
+            </a>
+
+            <div class="flex items-center space-x-3 sm:space-x-6 desktop-nav-links ml-auto">
                 <a href="games.html" class="px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md text-sm sm:text-base">Games</a>
             </div>
         </div>
