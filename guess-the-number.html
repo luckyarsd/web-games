@@ -3,83 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the Number Game (Demo)</title>
+    <title>Guess the Number - DesiPlay.shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Dark background for a gaming feel */
-            color: #e2e8f0; /* Light text color */
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a; /* Deeper dark blue-gray */
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        /* Custom styles for the "message box" - now just a static info box */
-        .info-box {
+        /* Custom gradient for text */
+        .text-gradient {
+            background: linear-gradient(90deg, #6366f1, #d946ef); /* Indigo to Fuchsia */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #1a202c; /* Slightly lighter gray for content background */
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #d946ef; /* Fuchsia */
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: #e2e8f0; /* White for main title */
+        }
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid #6366f1; /* Indigo */
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navbar and Mobile Menu Styles (Copied for consistency) */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background-color: #1f2937;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 1rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border-radius: 0 0 0.75rem 0.75rem;
+            z-index: 40;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            color: #e2e8f0;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .mobile-menu a:hover {
+            background-color: #374151;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 51;
+        }
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        @media (max-width: 767px) {
+            .desktop-nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+                order: -1;
+                margin-right: 1rem;
+            }
+            .nav-container {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+            }
+            .nav-logo {
+                flex-grow: 0;
+            }
+        }
+
+        /* Custom message box for game feedback */
+        .game-message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: #2d3748; /* Darker gray */
             border-radius: 0.75rem; /* rounded-xl */
-            padding: 1.5rem; /* p-6 */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2); /* shadow-lg */
+            padding: 2rem; /* p-8 */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4); /* shadow-2xl */
+            z-index: 1000;
             text-align: center;
+            max-width: 90%;
+            width: 400px;
             border: 2px solid #4a5568; /* border-gray-600 */
         }
-        .game-button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .game-button:hover {
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
+        .game-message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-gray-800 p-8 md:p-12 rounded-xl shadow-2xl max-w-lg w-full text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-            Guess the Number!
-        </h1>
-        <p class="text-lg md:text-xl mb-6 text-gray-300">
+<body class="selection:bg-fuchsia-600 selection:text-white">
+
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-90 backdrop-blur-sm p-4 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center nav-container">
+            <button class="hamburger" id="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white nav-logo">
+                <span class="text-gradient">DESI</span>PLAY
+            </a>
+
+            <div class="flex items-center space-x-3 sm:space-x-6 desktop-nav-links ml-auto">
+                <a href="games.html" class="px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md text-sm sm:text-base">Games</a>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu-links">
+            <a href="index.html#features">Features</a>
+            <a href="index.html#cta">Play Now</a>
+            <a href="about.html">About Us</a>
+            <a href="games.html">Games</a>
+        </div>
+    </nav>
+
+    <main class="container-content my-20 pt-24 pb-12 text-center">
+        <h1 class="mb-8">Guess the Number!</h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-8">
             I'm thinking of a number between 1 and 100. Can you guess it?
         </p>
 
-        <div class="info-box mb-6">
-            <p class="text-xl font-bold text-blue-300 mb-2">
-                This is a static game demo.
-            </p>
-            <p class="text-gray-400 text-sm">
-                Full interactive gameplay requires JavaScript, which is not included in this version.
-            </p>
-        </div>
-
         <div class="mb-6">
-            <input type="number" value="50" min="1" max="100" placeholder="Enter your guess" disabled
-                   class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-xl cursor-not-allowed">
+            <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess"
+                   class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-xl">
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
-            <a href="games.html"
-               class="game-button flex-1 bg-gradient-to-r from-green-500 to-blue-600 text-white">
-                Submit Guess (Go Back)
-            </a>
-            <a href="games.html"
-               class="game-button flex-1 bg-gradient-to-r from-red-500 to-orange-600 text-white">
-                Restart Game (Go Back)
-            </a>
+            <button id="submitGuessBtn"
+                    class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
+                Submit Guess
+            </button>
+            <button id="restartBtn"
+                    class="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white font-bold rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-opacity-50">
+                Restart Game
+            </button>
         </div>
 
-        <p class="text-xl font-semibold text-yellow-400">
-            Enter your guess above!
-        </p>
-        <p class="text-md text-gray-400 mt-2">Attempts: 0</p>
+        <p id="message" class="text-xl font-semibold text-yellow-400"></p>
+        <p id="attempts" class="text-md text-gray-400 mt-2">Attempts: 0</p>
 
         <a href="games.html"
-           class="mt-8 px-6 py-3 bg-gray-700 text-gray-200 font-semibold rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50">
+           class="mt-8 inline-block px-6 py-3 bg-gray-700 text-gray-200 font-semibold rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50">
             &larr; Back to Games
         </a>
-    </div>
+    </main>
+
+    <footer class="py-8 bg-gray-950 text-center text-gray-500 text-sm mt-10">
+        <p>&copy; 2025 DesiPlay.shop. All rights reserved.</p>
+        <p class="mt-2">Made with ❤️ for Indian Gamers.</p>
+        <div class="mt-4 space-x-4">
+            <a href="about.html" class="hover:underline">About Us</a>
+            <span class="text-gray-600">|</span>
+            <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+            <span class="text-gray-600">|</span>
+            <a href="terms.html" class="hover:underline">Terms & Conditions</a>
+            <span class="text-gray-600">|</span>
+            <a href="disclaimer.html" class="hover:underline">Disclaimer</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality (Copied for consistency)
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mobileMenuLinks = document.getElementById('mobile-menu-links');
+
+        hamburgerMenu.addEventListener('click', () => {
+            mobileMenuLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!hamburgerMenu.contains(event.target) && !mobileMenuLinks.contains(event.target)) {
+                if (mobileMenuLinks.classList.contains('active')) {
+                    mobileMenuLinks.classList.remove('active');
+                }
+            }
+        });
+
+        // Game Logic for Guess the Number
+        let secretNumber;
+        let attempts;
+        const maxAttempts = 7; // Increased attempts for a slightly easier game
+
+        const guessInput = document.getElementById('guessInput');
+        const submitGuessBtn = document.getElementById('submitGuessBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const message = document.getElementById('message');
+        const attemptsDisplay = document.getElementById('attempts');
+
+        // Function to show a custom message box instead of alert()
+        function showMessageBox(msg, type = 'info', callback = null) {
+            // Remove existing message box and overlay if any
+            const existingBox = document.querySelector('.game-message-box');
+            const existingOverlay = document.querySelector('.game-message-box-overlay');
+            if (existingBox) existingBox.remove();
+            if (existingOverlay) existingOverlay.remove();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'game-message-box-overlay';
+            document.body.appendChild(overlay);
+
+            const box = document.createElement('div');
+            box.className = 'game-message-box';
+
+            let bgColor = '';
+            let textColor = 'text-white';
+            let buttonColor = 'bg-blue-500 hover:bg-blue-600';
+
+            if (type === 'success') {
+                bgColor = 'bg-green-700';
+                buttonColor = 'bg-green-500 hover:bg-green-600';
+            } else if (type === 'error') {
+                bgColor = 'bg-red-700';
+                buttonColor = 'bg-red-500 hover:bg-red-600';
+            } else { // info
+                bgColor = 'bg-gray-700';
+            }
+
+            box.innerHTML = `
+                <p class="text-xl font-bold mb-4 ${textColor}">${msg}</p>
+                <button id="messageBoxCloseBtn" class="px-6 py-2 ${buttonColor} text-white rounded-lg transition-colors duration-200">OK</button>
+            `;
+            document.body.appendChild(box);
+
+            const closeBtn = document.getElementById('messageBoxCloseBtn');
+            closeBtn.addEventListener('click', () => {
+                box.remove();
+                overlay.remove();
+                if (callback) callback();
+            });
+        }
+
+        // Function to initialize the game
+        function initializeGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1; // Number between 1 and 100
+            attempts = 0;
+            message.textContent = '';
+            attemptsDisplay.textContent = `Attempts: ${attempts}`;
+            guessInput.value = '';
+            guessInput.disabled = false;
+            submitGuessBtn.disabled = false;
+            guessInput.focus(); // Focus on the input field
+            message.className = 'text-xl font-semibold text-yellow-400'; // Reset message color
+        }
+
+        // Function to handle a guess
+        function handleGuess() {
+            const userGuess = parseInt(guessInput.value);
+
+            // Input validation
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                showMessageBox('Please enter a valid number between 1 and 100.', 'error');
+                return;
+            }
+
+            attempts++;
+            attemptsDisplay.textContent = `Attempts: ${attempts}`;
+
+            if (userGuess === secretNumber) {
+                message.textContent = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts!`;
+                message.className = 'text-xl font-semibold text-green-400';
+                guessInput.disabled = true;
+                submitGuessBtn.disabled = true;
+                showMessageBox(`You won! The number was ${secretNumber}.`, 'success', initializeGame);
+            } else if (attempts >= maxAttempts) {
+                message.textContent = `Game Over! You ran out of attempts. The number was ${secretNumber}.`;
+                message.className = 'text-xl font-semibold text-red-400';
+                guessInput.disabled = true;
+                submitGuessBtn.disabled = true;
+                showMessageBox(`Game Over! The number was ${secretNumber}.`, 'error', initializeGame);
+            } else if (userGuess < secretNumber) {
+                message.textContent = 'Too low! Try again.';
+                message.className = 'text-xl font-semibold text-yellow-400';
+            } else {
+                message.textContent = 'Too high! Try again.';
+                message.className = 'text-xl font-semibold text-yellow-400';
+            }
+            guessInput.value = ''; // Clear input after guess
+            guessInput.focus(); // Keep focus on the input field
+        }
+
+        // Event listeners
+        submitGuessBtn.addEventListener('click', handleGuess);
+        restartBtn.addEventListener('click', initializeGame);
+
+        // Allow pressing Enter key to submit guess
+        guessInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleGuess();
+            }
+        });
+
+        // Initialize the game when the page loads
+        window.onload = initializeGame;
+    </script>
 </body>
 </html>
