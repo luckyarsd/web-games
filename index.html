@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background for a gaming feel */
+            color: #e2e8f0; /* Light text color */
+        }
+        /* Custom styles for the button-like link */
+        .play-button-link {
+            display: inline-block; /* Make it behave like a block for padding/margin, but allow text flow */
+            text-decoration: none; /* Remove underline from link */
+            /* Apply button styles */
+            padding: 1rem 2rem; /* px-8 py-4 */
+            background-image: linear-gradient(to right, var(--tw-gradient-stops)); /* bg-gradient-to-r */
+            --tw-gradient-from: #10b981; /* from-green-500 */
+            --tw-gradient-to: #2563eb; /* to-blue-600 */
+            color: white; /* text-white */
+            font-weight: 700; /* font-bold */
+            font-size: 1.5rem; /* text-2xl */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            transition: all 0.3s ease-in-out; /* transition-all duration-300 ease-in-out */
+            transform: scale(1); /* Initial scale for transition */
+        }
+        .play-button-link:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* hover:shadow-xl */
+            transform: scale(1.05); /* hover:scale-105 */
+        }
+        .play-button-link:focus {
+            outline: none; /* focus:outline-none */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5); /* focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="text-center bg-gray-800 p-8 md:p-12 rounded-xl shadow-2xl max-w-lg w-full transform transition-all duration-300 hover:scale-105">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 animate-pulse">
+            Welcome to the Game Hub!
+        </h1>
+        <p class="text-lg md:text-xl mb-8 text-gray-300">
+            Get ready for an exciting collection of mini-games.
+        </p>
+        <a href="games.html" class="play-button-link">
+            PLAY NOW!
+        </a>
+    </div>
+</body>
+</html>
