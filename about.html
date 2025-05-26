@@ -3,86 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Desi Play</title>
+    <title>About Us - DesiPlay.shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #0f172a; /* Deeper dark blue-gray */
             color: #e2e8f0;
-            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
+
+        /* Custom gradient for text */
+        .text-gradient {
+            background: linear-gradient(90deg, #6366f1, #d946ef); /* Indigo to Fuchsia */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        h1, h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: #d946ef; /* Fuchsia */
-            margin-bottom: 1rem;
+
+        /* Hamburger icon styles (copied from index.html for consistency) */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background-color: #1f2937;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 1rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border-radius: 0 0 0.75rem 0.75rem;
+            z-index: 40;
         }
-        h1 {
-            font-size: 3rem;
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1.5rem;
             text-align: center;
+            color: #e2e8f0;
+            transition: background-color 0.2s ease-in-out;
         }
-        h2 {
-            font-size: 2rem;
-            border-bottom: 2px solid #6366f1; /* Indigo */
-            padding-bottom: 0.5rem;
-            margin-top: 2rem;
+        .mobile-menu a:hover {
+            background-color: #374151;
         }
-        p {
-            margin-bottom: 1rem;
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 51;
         }
-        a {
-            color: #6366f1;
-            text-decoration: none;
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
         }
-        a:hover {
-            text-decoration: underline;
+        @media (max-width: 767px) {
+            .desktop-nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+                order: -1;
+                margin-right: 1rem;
+            }
+            .nav-container {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+            }
+            .nav-logo {
+                flex-grow: 0;
+            }
+        }
+        /* Custom styles for team cards */
+        .team-card {
+            background-color: #1a202c; /* A slightly darker gray */
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .profile-img {
+            border: 4px solid; /* Will be set by Tailwind border-indigo-500 or border-fuchsia-500 */
+            transition: border-color 0.3s ease;
+        }
+        .profile-img:hover {
+            border-color: #4a5568; /* A subtle change on hover */
         }
     </style>
 </head>
 <body class="selection:bg-fuchsia-600 selection:text-white">
+
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-90 backdrop-blur-sm p-4 shadow-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white">
+        <div class="max-w-7xl mx-auto flex justify-between items-center nav-container">
+            <button class="hamburger" id="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white nav-logo">
                 <span class="text-gradient">DESI</span>PLAY
             </a>
-            <div class="flex items-center space-x-6">
-                <a href="games.html" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md">
-                    Games
-                </a>
+
+            <div class="flex items-center space-x-3 sm:space-x-6 desktop-nav-links ml-auto">
+                <a href="games.html" class="px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md text-sm sm:text-base">Games</a>
             </div>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu-links">
+            <a href="index.html#features">Features</a>
+            <a href="index.html#cta">Play Now</a>
+            <a href="about.html">About Us</a>
+            <a href="games.html">Games</a>
         </div>
     </nav>
 
-    <main class="container bg-gray-800 rounded-xl shadow-2xl p-6 md:p-10 my-20">
-        <h1 class="text-white mb-8">About Desi Play</h1>
+    <main class="min-h-screen pt-24 pb-12 px-4 sm:px-6 md:px-8 bg-gray-900">
+        <section class="max-w-5xl mx-auto text-center py-12">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-8 font-orbitron text-white">
+                About <span class="text-gradient">DesiPlay.shop</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                Welcome to **DesiPlay.shop**, your vibrant hub for engaging and fun mini-games designed with an authentic Indian flair! We're a passionate two-person team dedicated to bringing joy and entertainment to your fingertips. As proud students of **Delhi University's ARSD College**, we blend academic rigor with creative passion to build a platform that connects players through shared fun. Our mission is to create a seamless and delightful gaming experience for all.
+            </p>
 
-        <section>
-            <h2>Our Story</h2>
-            <p>Welcome to **Desi Play**, your ultimate destination for fun, free, and engaging mini-games designed with an Indian touch! We believe in the joy of simple games and the power of play to bring people together.</p>
-            <p>Founded with a passion for casual gaming and a desire to create a platform that resonates with the Indian audience, Desi Play aims to provide a diverse collection of games that are easy to pick up and hard to put down. Whether you're looking for a quick brain teaser or a fun way to relax, we've got something for everyone.</p>
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-10 text-gradient">Meet Our Team</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
+                <div class="team-card p-6 sm:p-8 flex flex-col items-center text-center">
+                    <img src="lucky.jpg" alt="Lucky Tiwari" class="profile-img w-36 h-36 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 object-cover border-indigo-500 shadow-lg">
+                    <h3 class="text-3xl sm:text-4xl font-semibold mb-2 text-white">Lucky Tiwari</h3>
+                    <p class="text-indigo-400 text-xl font-medium mb-4">Owner, Founder & CEO</p>
+                    <p class="text-gray-300 leading-relaxed text-base sm:text-lg">
+                        Lucky is the visionary behind DesiPlay.shop, turning a passion for gaming and digital experiences into a vibrant platform. With a strong entrepreneurial spirit and a clear vision for the brand, he leads the strategic direction and ensures DesiPlay remains at the forefront of casual online gaming.
+                    </p>
+                </div>
+
+                <div class="team-card p-6 sm:p-8 flex flex-col items-center text-center">
+                    <img src="vikas.jpg" alt="Vikas Yadav" class="profile-img w-36 h-36 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 object-cover border-fuchsia-500 shadow-lg">
+                    <h3 class="text-3xl sm:text-4xl font-semibold mb-2 text-white">Vikas Yadav</h3>
+                    <p class="text-fuchsia-400 text-xl font-medium mb-4">Lead Developer</p>
+                    <p class="text-gray-300 leading-relaxed text-base sm:text-lg">
+                        Vikas is the technical backbone of DesiPlay.shop, meticulously crafting the code and bringing every game to life. With expertise in web development and a keen eye for user experience, he ensures the platform is robust, seamless, and provides an incredibly fun and engaging experience for all players.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-lg sm:text-xl text-gray-300 mt-12 max-w-3xl mx-auto">
+                Together, we are a dedicated duo committed to creating a unique and enjoyable gaming destination for everyone. Thank you for being a part of our journey!
+            </p>
         </section>
 
-        <section>
-            <h2>Our Mission</h2>
-            <p>Our mission is to build a vibrant online community where users can discover new games, challenge their friends (hypothetically, for now!), and enjoy a seamless gaming experience. We are committed to constantly expanding our library with fresh and exciting content.</p>
+        <section class="max-w-4xl mx-auto text-center py-12">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-10 text-gradient">Our Mission & Vision</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Our Mission</h3>
+                    <p class="text-gray-300">
+                        To build a vibrant online community where users can discover new games, engage in friendly challenges, and enjoy a seamless, free-to-play gaming experience. We are committed to constantly expanding our library with fresh, exciting, and culturally relevant content.
+                    </p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Our Vision</h3>
+                    <p class="text-gray-300">
+                        To become the leading online destination for casual, culturally-inspired mini-games, fostering a global community of players who connect through the universal language of fun.
+                    </p>
+                </div>
+            </div>
         </section>
 
-        <section>
-            <h2>Who We Are</h2>
-            <p>Desi Play is created and maintained by a small team of gaming enthusiasts dedicated to bringing quality entertainment to your screens. We are always listening to our players' feedback to improve and evolve.</p>
-        </section>
-
-        <section>
-            <h2>Contact Us</h2>
-            <p>If you have any questions, feedback, or suggestions, please feel free to reach out to us:</p>
-            <p>Email: <a href="mailto:support@desiplay.shop">support@desiplay.shop</a></p>
-            <p>We value your input and are always happy to hear from our community!</p>
+        <section class="max-w-4xl mx-auto text-center py-12">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-10 text-gradient">Connect With Us</h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Your feedback helps us grow! If you have any questions, suggestions, or just want to say hello, feel free to reach out.
+            </p>
+            <a href="mailto:support@desiplay.shop" class="inline-block px-8 py-4 bg-gradient-to-r from-green-500 to-cyan-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-70 text-lg">
+                Email Us: support@desiplay.shop
+            </a>
         </section>
     </main>
 
@@ -99,6 +208,23 @@
             <a href="disclaimer.html" class="hover:underline">Disclaimer</a>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle functionality (Copied from index.html)
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mobileMenuLinks = document.getElementById('mobile-menu-links');
+
+        hamburgerMenu.addEventListener('click', () => {
+            mobileMenuLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!hamburgerMenu.contains(event.target) && !mobileMenuLinks.contains(event.target)) {
+                if (mobileMenuLinks.classList.contains('active')) {
+                    mobileMenuLinks.classList.remove('active');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
-  
