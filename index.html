@@ -145,38 +145,126 @@
             50% { transform: translateY(-20px) translateX(20px); }
             100% { transform: translateY(0px) translateX(0px); }
         }
+
+        /* Mobile menu specific styles */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            background-color: #1f2937; /* Darker gray for menu background */
+            position: absolute;
+            top: 100%; /* Position below navbar */
+            left: 0;
+            width: 100%;
+            padding: 1rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border-radius: 0 0 0.75rem 0.75rem;
+            z-index: 40; /* Below fixed navbar, above main content */
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            color: #e2e8f0;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .mobile-menu a:hover {
+            background-color: #374151; /* Lighter gray on hover */
+        }
+
+        /* Hamburger icon styles */
+        .hamburger {
+            display: none; /* Hidden by default */
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 51; /* Above mobile menu */
+        }
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 767px) { /* For screens smaller than 'md' breakpoint (768px) */
+            .desktop-nav-links {
+                display: none; /* Hide desktop links */
+            }
+            .hamburger {
+                display: flex; /* Show hamburger */
+            }
+            .nav-container {
+                flex-wrap: wrap; /* Allow items to wrap */
+            }
+            .nav-logo {
+                flex-grow: 1; /* Allow logo to take available space */
+            }
+        }
     </style>
 </head>
 <body class="selection:bg-fuchsia-600 selection:text-white">
 
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-90 backdrop-blur-sm p-4 shadow-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white">
+        <div class="max-w-7xl mx-auto flex justify-between items-center nav-container">
+            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white nav-logo">
                 <span class="text-gradient">DESI</span>PLAY
             </a>
-            <div class="flex items-center space-x-3 sm:space-x-6"> <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm sm:text-base">Features</a>
+
+            <button class="hamburger" id="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <div class="flex items-center space-x-3 sm:space-x-6 desktop-nav-links">
+                <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm sm:text-base">Features</a>
                 <a href="#cta" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm sm:text-base">Play Now</a>
                 <a href="about.html" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm sm:text-base">About Us</a>
-                <a href="games.html" class="px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md text-sm sm:text-base"> Games
-                </a>
+                <a href="games.html" class="px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md text-sm sm:text-base">Games</a>
             </div>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu-links">
+            <a href="#features">Features</a>
+            <a href="#cta">Play Now</a>
+            <a href="about.html">About Us</a>
+            <a href="games.html">Games</a>
         </div>
     </nav>
 
     <header class="hero-bg min-h-screen flex items-center justify-center text-center p-6 relative z-10">
         <div class="relative z-10">
-            <h1 class="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-4 sm:mb-6 font-orbitron tracking-tighter leading-tight text-white animate-hero-text"> <span class="text-gradient">DESIPLAY</span>.<span class="text-white">SHOP</span>
+            <h1 class="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-4 sm:mb-6 font-orbitron tracking-tighter leading-tight text-white animate-hero-text">
+                <span class="text-gradient">DESIPLAY</span>.<span class="text-white">SHOP</span>
             </h1>
-            <p class="text-lg sm:text-xl md:text-3xl mb-8 sm:mb-10 text-gray-300 max-w-3xl mx-auto animate-hero-tagline px-2"> Your ultimate **desi** destination for fun, free, and engaging mini-games.
+            <p class="text-lg sm:text-xl md:text-3xl mb-8 sm:mb-10 text-gray-300 max-w-3xl mx-auto animate-hero-tagline px-2">
+                Your ultimate **desi** destination for fun, free, and engaging mini-games.
                 Get ready to **play, share, and connect!**
             </p>
-            <a href="games.html" class="animated-button px-8 py-4 sm:px-12 sm:py-5 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-xl sm:text-2xl text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-70 animate-hero-button"> Start Your Play
+            <a href="games.html" class="animated-button px-8 py-4 sm:px-12 sm:py-5 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-xl sm:text-2xl text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-70 animate-hero-button">
+                Start Your Play
             </a>
         </div>
         <div id="particle-container" class="absolute inset-0 z-0 opacity-20"></div>
     </header>
 
-    <section class="py-16 sm:py-20 bg-gray-900 text-center fade-in-section" id="features"> <h2 class="text-4xl sm:text-5xl font-extrabold mb-8 sm:mb-12 text-gradient">Why DesiPlay?</h2> <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 max-w-6xl mx-auto px-4 sm:px-6"> <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt> <div class="text-4xl sm:text-5xl mb-3 sm:mb-4 text-indigo-400 icon-bounce">🎮</div> <h3 class="text-2xl sm:text-3xl font-semibold mb-2 sm:mb-3 text-white">Curated Collection</h3> <p class="text-sm sm:text-base text-gray-300">Handpicked games ensuring endless fun for everyone.</p> </div>
+    <section class="py-16 sm:py-20 bg-gray-900 text-center fade-in-section" id="features">
+        <h2 class="text-4xl sm:text-5xl font-extrabold mb-8 sm:mb-12 text-gradient">Why DesiPlay?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt>
+                <div class="text-4xl sm:text-5xl mb-3 sm:mb-4 text-indigo-400 icon-bounce">🎮</div>
+                <h3 class="text-2xl sm:text-3xl font-semibold mb-2 sm:mb-3 text-white">Curated Collection</h3>
+                <p class="text-sm sm:text-base text-gray-300">Handpicked games ensuring endless fun for everyone.</p>
+            </div>
             <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt>
                 <div class="text-4xl sm:text-5xl mb-3 sm:mb-4 text-fuchsia-400 icon-bounce">✨</div>
                 <h3 class="text-2xl sm:text-3xl font-semibold mb-2 sm:mb-3 text-white">Modern & Engaging</h3>
@@ -190,9 +278,13 @@
         </div>
     </section>
 
-    <section class="py-16 sm:py-20 text-center fade-in-section" id="cta"> <h2 class="text-4xl sm:text-5xl font-extrabold mb-6 sm:mb-8 text-gradient">Ready to Play?</h2> <p class="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto px-2"> Join thousands of players enjoying the best of casual gaming. Your next favorite game is just a click away!
+    <section class="py-16 sm:py-20 text-center fade-in-section" id="cta">
+        <h2 class="text-4xl sm:text-5xl font-extrabold mb-6 sm:mb-8 text-gradient">Ready to Play?</h2>
+        <p class="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto px-2">
+            Join thousands of players enjoying the best of casual gaming. Your next favorite game is just a click away!
         </p>
-        <a href="games.html" class="animated-button pulse-button px-10 py-4 sm:px-16 sm:py-6 bg-gradient-to-r from-green-500 to-cyan-500 text-2xl sm:text-3xl text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-70"> Explore Games
+        <a href="games.html" class="animated-button pulse-button px-10 py-4 sm:px-16 sm:py-6 bg-gradient-to-r from-green-500 to-cyan-500 text-2xl sm:text-3xl text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-70">
+            Explore Games
         </a>
     </section>
 
@@ -218,6 +310,11 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+                // Close mobile menu after clicking a link
+                const mobileMenu = document.getElementById('mobile-menu-links');
+                if (mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                }
             });
         });
 
@@ -288,6 +385,23 @@
             particle.style.animationDelay = `${Math.random() * -10}s`; // Random start delay
             particleContainer.appendChild(particle);
         }
+
+        // Mobile menu toggle functionality
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mobileMenuLinks = document.getElementById('mobile-menu-links');
+
+        hamburgerMenu.addEventListener('click', () => {
+            mobileMenuLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside (optional, but good UX)
+        document.addEventListener('click', (event) => {
+            if (!hamburgerMenu.contains(event.target) && !mobileMenuLinks.contains(event.target)) {
+                if (mobileMenuLinks.classList.contains('active')) {
+                    mobileMenuLinks.classList.remove('active');
+                }
+            }
+        });
     </script>
 </body>
 </html>
