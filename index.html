@@ -12,6 +12,7 @@
             background-color: #0f172a; /* Deeper dark blue-gray */
             color: #e2e8f0;
             overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            perspective: 1000px; /* For 3D transformations */
         }
 
         /* Custom gradient for hero text and buttons */
@@ -77,45 +78,123 @@
         .animated-button:hover::before {
             left: 100%;
         }
+
+        /* Hero text entrance animation */
+        .animate-hero-text {
+            animation: slideInFromTop 1s ease-out forwards;
+            opacity: 0;
+        }
+        .animate-hero-tagline {
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+        .animate-hero-button {
+            animation: fadeIn 1.5s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Feature card 3D tilt effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+        .tilt-card:hover {
+            transform: rotateX(var(--rotateX)) rotateY(var(--rotateY)) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Icon bounce on hover */
+        .icon-bounce:hover {
+            animation: bounce 0.6s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* CTA button pulse */
+        .pulse-button {
+            animation: pulse-effect 2s infinite ease-in-out;
+        }
+        @keyframes pulse-effect {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+
+        /* Particle styles (for JS generated particles) */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(20px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
     </style>
 </head>
 <body class="selection:bg-fuchsia-600 selection:text-white">
 
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-90 backdrop-blur-sm p-4 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-extrabold font-orbitron text-white">
+                <span class="text-gradient">DESI</span>PLAY
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200">Features</a>
+                <a href="#cta" class="text-gray-300 hover:text-white transition-colors duration-200">Play Now</a>
+                <a href="games.html" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white rounded-full font-semibold hover:from-indigo-600 hover:to-fuchsia-600 transition-all duration-300 shadow-md">
+                    Games
+                </a>
+            </div>
+        </div>
+    </nav>
+
     <header class="hero-bg min-h-screen flex items-center justify-center text-center p-6 relative z-10">
         <div class="relative z-10">
-            <h1 class="text-6xl md:text-8xl font-extrabold mb-6 font-orbitron tracking-tighter leading-none text-white">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-6 font-orbitron tracking-tighter leading-none text-white animate-hero-text">
                 <span class="text-gradient">DESIPLAY</span>.<span class="text-white">SHOP</span>
             </h1>
-            <p class="text-xl md:text-3xl mb-10 text-gray-300 max-w-3xl mx-auto animate-fade-in-up">
-                Your ultimate **desi** destination for fun, free, and engaging mini-games.
-                Get ready to **play, share, and connect!**
+            <p class="text-xl md:text-3xl mb-10 text-gray-300 max-w-3xl mx-auto animate-hero-tagline">
+                Your ultimate <strong>desi</strong> destination for fun, free, and engaging mini-games.
+                Get ready to <strong>play, share, and connect!</strong>
             </p>
-            <a href="games.html" class="animated-button px-12 py-5 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white font-bold text-2xl rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-70">
+            <a href="games.html" class="animated-button px-12 py-5 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white font-bold text-2xl rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-70 animate-hero-button">
                 Start Your Play
             </a>
         </div>
-        <div class="absolute inset-0 z-0 opacity-20">
-            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
-            <div class="absolute top-1/2 right-1/4 w-48 h-48 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-2000"></div>
-            <div class="absolute bottom-1/4 left-1/2 w-40 h-40 bg-pink-500 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-4000"></div>
-        </div>
+        <div id="particle-container" class="absolute inset-0 z-0 opacity-20"></div>
     </header>
 
     <section class="py-20 bg-gray-900 text-center fade-in-section" id="features">
         <h2 class="text-5xl font-extrabold mb-12 text-gradient">Why DesiPlay?</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
-            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="text-5xl mb-4 text-indigo-400">🎮</div>
+            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt>
+                <div class="text-5xl mb-4 text-indigo-400 icon-bounce">🎮</div>
                 <h3 class="text-3xl font-semibold mb-3 text-white">Curated Collection</h3>
                 <p class="text-gray-300">Handpicked games ensuring endless fun for everyone.</p>
             </div>
-            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="text-5xl mb-4 text-fuchsia-400">✨</div>
+            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt>
+                <div class="text-5xl mb-4 text-fuchsia-400 icon-bounce">✨</div>
                 <h3 class="text-3xl font-semibold mb-3 text-white">Modern & Engaging</h3>
                 <p class="text-gray-300">Sleek design and smooth gameplay experience.</p>
             </div>
-            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="text-5xl mb-4 text-green-400">🇮🇳</div>
+            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 tilt-card" data-tilt>
+                <div class="text-5xl mb-4 text-green-400 icon-bounce">🇮🇳</div>
                 <h3 class="text-3xl font-semibold mb-3 text-white">Desi Flavors</h3>
                 <p class="text-gray-300">Games and themes that resonate with you!</p>
             </div>
@@ -127,7 +206,7 @@
         <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
             Join thousands of players enjoying the best of casual gaming. Your next favorite game is just a click away!
         </p>
-        <a href="games.html" class="animated-button px-16 py-6 bg-gradient-to-r from-green-500 to-cyan-500 text-white font-bold text-3xl rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-70">
+        <a href="games.html" class="animated-button pulse-button px-16 py-6 bg-gradient-to-r from-green-500 to-cyan-500 text-white font-bold text-3xl rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-70">
             Explore Games
         </a>
     </section>
@@ -138,7 +217,7 @@
     </footer>
 
     <script>
-        // Smooth scroll for internal links (optional, for future sections)
+        // Smooth scroll for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -161,7 +240,11 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Stop observing once visible
+                    // No unobserve here if you want the animation to replay on scroll up/down
+                    // observer.unobserve(entry.target);
+                } else {
+                    // Optional: remove is-visible if you want the animation to reset when out of view
+                    entry.target.classList.remove('is-visible');
                 }
             });
         }, observerOptions);
@@ -170,20 +253,47 @@
             observer.observe(section);
         });
 
-        // Simple animate-blob keyframes for background particles
-        const styleSheet = document.createElement('style');
-        styleSheet.type = 'text/css';
-        styleSheet.innerText = `
-            @keyframes animate-blob {
-                0% { transform: translate(0px, 0px) scale(1); }
-                33% { transform: translate(30px, -50px) scale(1.1); }
-                66% { transform: translate(-20px, 20px) scale(0.9); }
-                100% { transform: translate(0px, 0px) scale(1); }
-            }
-            .animation-delay-2000 { animation-delay: 2s; }
-            .animation-delay-4000 { animation-delay: 4s; }
-        `;
-        document.head.appendChild(styleSheet);
+        // Feature card 3D tilt effect (JavaScript for mouse movement)
+        const tiltCards = document.querySelectorAll('.tilt-card');
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // x position within the element.
+                const y = e.clientY - rect.top;  // y position within the element.
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * 10; // Max 10 degrees
+                const rotateY = ((x - centerX) / centerX) * -10; // Max -10 degrees
+
+                card.style.setProperty('--rotateX', `${rotateX}deg`);
+                card.style.setProperty('--rotateY', `${rotateY}deg`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.setProperty('--rotateX', `0deg`);
+                card.style.setProperty('--rotateY', `0deg`);
+            });
+        });
+
+        // Dynamic Particle Background (JavaScript)
+        const particleContainer = document.getElementById('particle-container');
+        const numParticles = 50; // Number of particles
+
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 4 + 2; // Size between 2px and 6px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 10 + 10}s`; // 10-20s
+            particle.style.animationDelay = `${Math.random() * -10}s`; // Random start delay
+            particleContainer.appendChild(particle);
+        }
     </script>
 </body>
 </html>
